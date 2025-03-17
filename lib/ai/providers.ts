@@ -4,6 +4,7 @@ import {
   wrapLanguageModel,
 } from 'ai';
 import { openai } from '@ai-sdk/openai';
+import { createQwen } from 'qwen-ai-provider';
 import { fireworks } from '@ai-sdk/fireworks';
 import { isTestEnvironment } from '../constants';
 import {
@@ -12,6 +13,11 @@ import {
   reasoningModel,
   titleModel,
 } from './models.test';
+
+const qwen = createQwen({
+  baseURL: 'https://dashscope.aliyuncs.com/compatible-mode/v1',
+  apiKey: 'sk-53e719214a2c47eb978dcd4a999fb953'
+});
 
 export const myProvider = isTestEnvironment
   ? customProvider({
@@ -25,13 +31,13 @@ export const myProvider = isTestEnvironment
     })
   : customProvider({
       languageModels: {
-        'chat-model-small': openai('gpt-4o-mini'),
-        'chat-model-large': openai('gpt-4o'),
+        'chat-model-small': qwen('qwen-turbo'),
+        'chat-model-large': qwen('qwen-plus'),
         'chat-model-reasoning': wrapLanguageModel({
-          model: fireworks('accounts/fireworks/models/deepseek-r1'),
+          model: qwen('qwq-plus'),
           middleware: extractReasoningMiddleware({ tagName: 'think' }),
         }),
-        'title-model': openai('gpt-4-turbo'),
+        'title-model': qwen('qwen-turbo'),
         'artifact-model': openai('gpt-4o-mini'),
       },
       imageModels: {
