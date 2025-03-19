@@ -38,7 +38,7 @@ export const myProvider = isTestEnvironment
           middleware: extractReasoningMiddleware({ tagName: 'think' }),
         }),
         'title-model': qwen('qwen-turbo'),
-        'artifact-model': openai('gpt-4o-mini'),
+        'artifact-model': qwen('qwen-turbo'),
       },
       imageModels: {
         'small-model': openai.image('dall-e-2'),
